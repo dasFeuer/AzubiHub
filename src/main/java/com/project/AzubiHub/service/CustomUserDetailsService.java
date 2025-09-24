@@ -1,6 +1,5 @@
 package com.project.AzubiHub.service;
 
-import com.project.AzubiHub.enitty.User;
 import com.project.AzubiHub.enitty.UserPrincipal;
 import com.project.AzubiHub.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
