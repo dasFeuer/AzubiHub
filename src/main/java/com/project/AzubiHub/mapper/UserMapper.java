@@ -3,7 +3,7 @@ package com.project.AzubiHub.mapper;
 import com.project.AzubiHub.enitty.RegisterUserRequest;
 import com.project.AzubiHub.enitty.RegisterUserRequestDto;
 import com.project.AzubiHub.enitty.User;
-import com.project.AzubiHub.enitty.UserDto;
+import com.project.AzubiHub.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

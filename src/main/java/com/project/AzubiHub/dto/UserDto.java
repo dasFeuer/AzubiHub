@@ -1,4 +1,4 @@
-package com.project.AzubiHub.enitty;
+package com.project.AzubiHub.dto;
 
 import com.project.AzubiHub.Enum.Roles;
 import lombok.*;

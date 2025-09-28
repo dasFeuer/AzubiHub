@@ -47,12 +47,12 @@ public class JwtService {
                 .compact();
     }
 
-    // ✅ Username extrahieren
+    // Username extrahieren
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // ✅ Rolle(n) extrahieren
+    // Rolle(n) extrahieren
     public List<String> extractRoles(String token) {
         Claims claims = extractAllClaims(token);
         Object roles = claims.get("roles");
@@ -62,7 +62,7 @@ public class JwtService {
         return List.of();
     }
 
-    // ✅ Claims extrahieren
+    // Claims extrahieren
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -76,7 +76,7 @@ public class JwtService {
                 .getPayload();
     }
 
-    // ✅ Gültigkeit prüfen
+    // Gültigkeit prüfen
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
