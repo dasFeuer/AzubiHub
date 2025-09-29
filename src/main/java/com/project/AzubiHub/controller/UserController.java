@@ -1,9 +1,11 @@
 package com.project.AzubiHub.controller;
 
 import com.project.AzubiHub.dto.AuthResponse;
+import com.project.AzubiHub.dto.UpdateUserRequestDto;
 import com.project.AzubiHub.enitty.LoginUserRequest;
 import com.project.AzubiHub.enitty.RegisterUserRequest;
-import com.project.AzubiHub.enitty.RegisterUserRequestDto;
+import com.project.AzubiHub.dto.RegisterUserRequestDto;
+import com.project.AzubiHub.enitty.UpdateUserRequest;
 import com.project.AzubiHub.enitty.User;
 import com.project.AzubiHub.dto.UserDto;
 import com.project.AzubiHub.mapper.UserMapper;
@@ -18,8 +20,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,8 +43,8 @@ public class UserController {
             @Valid  @RequestBody RegisterUserRequestDto registerUserRequestDto){
         RegisterUserRequest registerUserRequest = userMapper.toRegister(registerUserRequestDto);
         User newUser = userService.createNewUser(registerUserRequest);
-        UserDto userDto = userMapper.toDto(newUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
+        UserDto userCreated = userMapper.toDto(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
     }
 
     @PostMapping("/login")
@@ -59,5 +64,25 @@ public class UserController {
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(loginResponse);
     }
+
+    @PutMapping("/{Id}/update")
+    public ResponseEntity<UserDto> loginUser(
+            @PathVariable Long Id,  @Valid @RequestBody UpdateUserRequestDto updateUserRequestDto ) {
+        UpdateUserRequest updateUserRequest = userMapper.toUpdate(updateUserRequestDto);
+        User user = userService.updateUser(Id, updateUserRequest);
+        UserDto userUpdated = userMapper.toDto(user);
+        return ResponseEntity.status(HttpStatus.OK).body(userUpdated);
+    }
+
+    @GetMapping("/{Id}/get")
+    public ResponseEntity<UserDto> getUserById(
+            @PathVariable Long Id ) {
+        Optional<User> user = userService.findUserById(Id);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(userMapper.toDto(user.get()));
+        }
+        throw new UsernameNotFoundException("User not found with ID: " + Id);
+    }
+
 
 }
