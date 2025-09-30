@@ -84,5 +84,13 @@ public class UserController {
         throw new UsernameNotFoundException("User not found with ID: " + Id);
     }
 
+    @DeleteMapping("/{Id}/delete")
+    public ResponseEntity<Void> deleteUserById(
+            @PathVariable Long Id ) {
+        userService.deleteUserById(Id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
 
 }
