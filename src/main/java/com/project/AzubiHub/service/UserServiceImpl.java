@@ -40,6 +40,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Email must not be empty");
+        }
+        return userRepository.findByEmail(email);
+    }
+
+
+    @Override
     public User updateUser(Long Id, UpdateUserRequest updateUserRequest) {
         Optional<User> existedUser = userRepository.findById(Id);
         if (existedUser.isPresent()) {
