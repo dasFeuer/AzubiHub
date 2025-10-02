@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,12 +30,13 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // Registrierung & Login offen
+                        .requestMatchers("/auth/register", "/auth/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN_USER")
                         .requestMatchers("/ausbilder/**").hasRole("AUSBILDER_USER")
                         .requestMatchers("/azubi/**").hasRole("AZUBI_USER")
                         .anyRequest().authenticated()
                 )
+                //.httpBasic(Customizer.withDefaults()) // For Basic Auth only. Recommended to use Bearer Token
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

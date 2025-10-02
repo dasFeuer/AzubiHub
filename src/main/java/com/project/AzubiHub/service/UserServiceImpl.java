@@ -13,7 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.SequencedCollection;
 
 @Slf4j
 @Service
@@ -72,5 +74,10 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UsernameNotFoundException("User ID cannot be found: " + Id);
         }
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 }

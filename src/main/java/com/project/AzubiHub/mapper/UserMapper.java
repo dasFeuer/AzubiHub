@@ -1,6 +1,7 @@
 package com.project.AzubiHub.mapper;
 
 import com.project.AzubiHub.dto.UpdateUserRequestDto;
+import com.project.AzubiHub.dto.UserDtoSummary;
 import com.project.AzubiHub.enitty.RegisterUserRequest;
 import com.project.AzubiHub.dto.RegisterUserRequestDto;
 import com.project.AzubiHub.enitty.UpdateUserRequest;
@@ -13,6 +14,7 @@ import org.mapstruct.ReportingPolicy;
 public interface UserMapper{
 
     UserDto toDto(User user);
+    UserDtoSummary toSummary(User user);
     RegisterUserRequest toRegister(RegisterUserRequestDto registerUserRequestDto);
     UpdateUserRequest toUpdate(UpdateUserRequestDto updateUserRequestDto);
 }

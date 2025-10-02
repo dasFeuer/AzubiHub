@@ -16,18 +16,18 @@ import java.util.Optional;
 public class AuthUser {
     private final UserService userService;
 
-    private Optional<User> getAuthenticateCurrentUser() {
+    public Optional<User> getAuthenticateCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userService.getUserByEmail(email);
     }
 
-    private User getAuthenticatedUserOrThrow() {
+    public User getAuthenticatedUserOrThrow() {
         return getAuthenticateCurrentUser()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not authenticated"));
     }
 
-    private void validateUserAccess(Long userId){
+    public void validateUserAccess(Long userId){
         User user = getAuthenticatedUserOrThrow();
         if (!user.getId().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access Denied");

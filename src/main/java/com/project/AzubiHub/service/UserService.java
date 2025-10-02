@@ -4,6 +4,7 @@ import com.project.AzubiHub.enitty.RegisterUserRequest;
 import com.project.AzubiHub.enitty.UpdateUserRequest;
 import com.project.AzubiHub.enitty.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -12,5 +13,7 @@ public interface UserService {
     Optional<User> getUserByEmail(String email);
     User updateUser(Long Id, UpdateUserRequest updateUserRequest);
     void deleteUserById(Long Id);
+    List<User> getAllUser();
+
 
 }
