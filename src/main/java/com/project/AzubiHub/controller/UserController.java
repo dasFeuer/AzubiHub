@@ -104,4 +104,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(collectAllUsers);
     }
 
+    @GetMapping("/email")
+    public ResponseEntity<UserDtoSummary> findByEmail(@RequestParam("email") String email){
+        authUser.getAuthenticatedUserOrThrow();
+        Optional<User> user = userService.getUserByEmail(email);
+        if (user.isPresent()){
+            return ResponseEntity.ok(userMapper.toSummary(user.get()));
+
+        }
+        throw new UsernameNotFoundException("User not found with email: " + email);
+
+    }
+
+
 }

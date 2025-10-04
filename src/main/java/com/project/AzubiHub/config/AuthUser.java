@@ -1,5 +1,6 @@
 package com.project.AzubiHub.config;
 
+import com.project.AzubiHub.Enum.Roles;
 import com.project.AzubiHub.enitty.User;
 import com.project.AzubiHub.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,13 @@ public class AuthUser {
 
     public void validateUserAccess(Long userId){
         User user = getAuthenticatedUserOrThrow();
+
+        boolean isAdmin = user.getRole().equals(Roles.ADMIN_USER);
+
+        if (isAdmin){
+            return;
+        }
+
         if (!user.getId().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access Denied");
         }
